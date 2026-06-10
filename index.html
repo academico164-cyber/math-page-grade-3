@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Grade 3 Math — Planning Portal</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #f4f1eb;
+    --surface: #ffffff;
+    --surface2: #faf8f4;
+    --border: #e2ddd5;
+    --accent: #2d5a8e;
+    --accent2: #c8522a;
+    --accent3: #4a8c6f;
+    --text: #1a1814;
+    --muted: #7a7268;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TOP BAR */
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    letter-spacing: 0.01em;
+    flex: 1;
+  }
+  header .sub { font-size: 0.78rem; opacity: 0.75; }
+
+  /* LAYOUT */
+  .layout { display: flex; flex: 1; min-height: 0; }
+
+  /* SIDEBAR */
+  #sidebar {
+    width: 210px;
+    min-width: 210px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 18px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  #sidebar .section-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 10px 18px 4px;
+  }
+  #sidebar button {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 9px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: background 0.15s, border-color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #sidebar button:hover { background: var(--bg); }
+  #sidebar button.active {
+    border-left-color: var(--accent);
+    background: #eef3fa;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  #sidebar .icon { font-size: 1rem; width: 18px; text-align: center; }
+  #sidebar hr { border: none; border-top: 1px solid var(--border); margin: 8px 12px; }
+
+  /* MAIN CONTENT */
+  #main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 32px;
+    max-width: 960px;
+  }
+
+  /* VIEWS */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* LOAD SECTION */
+  .load-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+  }
+  .load-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    margin-bottom: 12px;
+    color: var(--accent);
+  }
+  .load-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .load-row input[type=file] {
+    font-size: 0.84rem;
+    color: var(--muted);
+    flex: 1;
+    min-width: 200px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+  }
+  .card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--accent);
+  }
+
+  /* PAGE TITLE */
+  .page-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+    color: var(--accent);
+  }
+  .page-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 22px; }
+
+  /* MUTED TEXT */
+  .muted { color: var(--muted); font-size: 0.84rem; margin-top: 3px; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+  .btn-danger { background: var(--accent2); color: #fff; }
+  .btn-green { background: var(--accent3); color: #fff; }
+  .btn-sm { padding: 5px 11px; font-size: 0.78rem; }
+
+  /* PROGRESS / STATUS */
+  #load-status {
+    margin-top: 10px;
+    font-size: 0.84rem;
+    color: var(--accent3);
+    font-weight: 500;
+    min-height: 22px;
+  }
+  .progress-bar-wrap {
+    background: var(--border);
+    border-radius: 99px;
+    height: 6px;
+    margin-top: 8px;
+    overflow: hidden;
+    display: none;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.2s;
+    border-radius: 99px;
+  }
+
+  /* OVERVIEW GRID */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .overview-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    cursor: pointer;
+    transition: box-shadow 0.15s, transform 0.15s;
+    box-shadow: var(--shadow);
+  }
+  .overview-card:hover { box-shadow: 0 4px 20px rgba(45,90,142,0.12); transform: translateY(-2px); }
+  .overview-card .mod-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .overview-card .mod-title { font-weight: 600; font-size: 0.88rem; }
+  .overview-card .mod-topics { color: var(--muted); font-size: 0.78rem; margin-top: 4px; }
+
+  /* TOPIC LIST */
+  .topic-list { list-style: none; }
+  .topic-list li {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.12s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .topic-list li:hover { background: #eef3fa; }
+  .topic-list li .pages-badge {
+    font-size: 0.72rem;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+
+  /* MODULE TOPICS GRID */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .topic-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+  }
+  .topic-card h4 { font-family: 'DM Serif Display', serif; font-size: 1rem; margin-bottom: 4px; }
+  .topic-card .btn-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+
+  /* LESSON PLAN */
+  .lesson-plan ol { padding-left: 20px; }
+  .lesson-plan li { margin-bottom: 10px; font-size: 0.9rem; line-height: 1.55; }
+  .lesson-plan li strong { color: var(--accent); }
+  .diff-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 8px; }
+  .diff-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-size: 0.82rem; }
+  .diff-box .diff-label { font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+  .diff-box.support .diff-label { color: var(--accent2); }
+  .diff-box.onlevel .diff-label { color: var(--accent); }
+  .diff-box.extension .diff-label { color: var(--accent3); }
+
+  /* AI VIEW */
+  .ai-controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 18px; }
+  .ai-controls label { font-size: 0.82rem; font-weight: 600; display: block; margin-bottom: 4px; }
+  .ai-controls select {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.84rem;
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    min-width: 180px;
+  }
+  .prompt-box pre {
+    white-space: pre-wrap;
+    font-size: 0.78rem;
+    font-family: 'DM Mono', 'Courier New', monospace;
+    background: var(--bg);
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 8px;
+    color: var(--text);
+    line-height: 1.5;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  /* ASSESSMENT & TOOLKIT */
+  #assessments-list .card, #toolkit-grid .card { margin-bottom: 12px; }
+
+  /* EXCERPT */
+  .excerpt-item {
+    font-size: 0.78rem;
+    background: var(--surface2);
+    border-left: 3px solid var(--accent);
+    padding: 6px 10px;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 5px;
+    color: var(--muted);
+  }
+  .excerpt-item strong { color: var(--text); }
+
+  /* SKILLS / MISCONCEPTIONS chips */
+  .chip-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .chip {
+    font-size: 0.74rem;
+    padding: 3px 10px;
+    border-radius: 99px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .chip.red { background: #fef0ec; border-color: #f5c4b5; color: #b84520; }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
+  .empty-state p { font-size: 0.9rem; line-height: 1.6; }
+
+  /* BACK BUTTON */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.82rem;
+    color: var(--accent);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-bottom: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+  .back-btn:hover { text-decoration: underline; }
+
+  /* Scroll restore */
+  #main { scroll-behavior: smooth; }
+
+  /* Toast */
+  #toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #1a1814;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 999;
+  }
+  #toast.show { opacity: 1; }
+
+  @media (max-width: 700px) {
+    .layout { flex-direction: column; }
+    #sidebar { width: 100%; min-width: unset; flex-direction: row; flex-wrap: wrap; padding: 8px; border-right: none; border-bottom: 1px solid var(--border); }
+    #sidebar button { width: auto; border-left: none; border-bottom: 3px solid transparent; padding: 7px 12px; }
+    #sidebar button.active { border-bottom-color: var(--accent); border-left-color: transparent; }
+    #main { padding: 16px; }
+    .diff-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>📚 Grade 3 Math — Planning Portal</h1>
+    <div class="sub">Colegio San José de Las Vegas · Singapur Series 2026</div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="section-label">Navigation</div>
+    <button data-route="home" class="active"><span class="icon">🏠</span> Home</button>
+    <button data-route="lessons"><span class="icon">📖</span> Lessons</button>
+    <button data-route="ai"><span class="icon">🤖</span> AI Prompts</button>
+    <button data-route="assessments"><span class="icon">📝</span> Assessments</button>
+    <button data-route="toolkit"><span class="icon">🧰</span> Toolkit</button>
+    <hr/>
+    <div class="section-label">Modules</div>
+    <button data-route="module-1"><span class="icon">①</span> Module 1</button>
+    <button data-route="module-2"><span class="icon">②</span> Module 2</button>
+    <button data-route="module-3"><span class="icon">③</span> Module 3</button>
+    <button data-route="module-4"><span class="icon">④</span> Module 4</button>
+  </nav>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- HOME VIEW -->
+    <div id="view-home" class="view active">
+      <div class="load-section">
+        <h2>📂 Load Book PDF</h2>
+        <div class="load-row">
+          <input type="file" id="pdffile" accept="application/pdf"/>
+          <button class="btn btn-primary" id="use-bundled">Load Default PDF</button>
+        </div>
+        <div id="load-status"></div>
+        <div class="progress-bar-wrap" id="progress-wrap">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+      </div>
+
+      <div id="home-loaded" style="display:none">
+        <h2 class="page-title">Curriculum Overview</h2>
+        <p class="page-sub" id="overview-text"></p>
+        <div class="overview-grid" id="overview-grid"></div>
+
+        <h3 style="font-family:'DM Serif Display',serif; margin-bottom:10px; font-size:1.05rem;">Topic Index</h3>
+        <div class="card" style="padding:0; overflow:hidden;">
+          <ul class="topic-list" id="topic-list"></ul>
+        </div>
+      </div>
+
+      <div id="home-empty" class="empty-state">
+        <div class="icon">📖</div>
+        <p>Upload the Grade 3 Mathematics PDF to generate a complete curriculum map with modules, lessons, AI prompts, and assessment templates.</p>
+      </div>
+    </div>
+
+    <!-- MODULE VIEW -->
+    <div id="view-module" class="view">
+      <button class="back-btn" onclick="setRoute('home')">← Back to Home</button>
+      <h2 class="page-title" id="module-title">Module</h2>
+      <p class="page-sub" id="module-sub"></p>
+      <div class="topics-grid" id="module-topics"></div>
+    </div>
+
+    <!-- TOPIC DETAIL VIEW -->
+    <div id="view-topic" class="view">
+      <button class="back-btn" id="topic-back-btn">← Back to Module</button>
+      <div id="topic-detail-content"></div>
+    </div>
+
+    <!-- LESSONS VIEW -->
+    <div id="view-lessons" class="view">
+      <button class="back-btn" id="lessons-back-btn">← Back</button>
+      <div id="lessons-content"></div>
+    </div>
+
+    <!-- LESSON DETAIL VIEW -->
+    <div id="view-lesson-detail" class="view">
+      <button class="back-btn" id="lesson-detail-back-btn">← Back to Lessons</button>
+      <div id="lesson-detail-content"></div>
+    </div>
+
+    <!-- AI VIEW -->
+    <div id="view-ai" class="view">
+      <h2 class="page-title">🤖 AI Exercise Generator</h2>
+      <p class="page-sub">Generate ready-to-use prompts for ChatGPT, Claude, or Gemini aligned to book content.</p>
+      <div class="ai-controls">
+        <div>
+          <label for="select-lesson">Lesson / Topic</label>
+          <select id="select-lesson"><option value="">— Load a book first —</option></select>
+        </div>
+        <div>
+          <label for="ai-version">Differentiation Level</label>
+          <select id="ai-version">
+            <option value="support">Support</option>
+            <option value="onlevel" selected>On-Level</option>
+            <option value="extension">Extension</option>
+            <option value="assessment">Assessment</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="generate-prompts">Generate Prompts</button>
+      </div>
+      <div id="ai-output"></div>
+    </div>
+
+    <!-- ASSESSMENTS VIEW -->
+    <div id="view-assessments" class="view">
+      <h2 class="page-title">📝 Assessments</h2>
+      <p class="page-sub">Unit assessments, exit tickets, and quick checks derived from the book structure.</p>
+      <div id="assessments-list"></div>
+    </div>
+
+    <!-- TOOLKIT VIEW -->
+    <div id="view-toolkit" class="view">
+      <h2 class="page-title">🧰 Teacher Toolkit</h2>
+      <p class="page-sub">Ready-to-copy templates for lesson planning, small groups, interventions, and more.</p>
+      <div id="toolkit-grid"></div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toast"></div>
+
+<!-- PDF.js from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+// ─── PDF.js setup ───────────────────────────────────────────────────────────
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+// ─── Simple nanoid replacement (no dependency needed) ───────────────────────
+function nanoid(len = 8) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let id = '';
+  for (let i = 0; i < len; i++) id += chars[Math.floor(Math.random() * chars.length)];
+  return id;
+}
+
+// ─── Toast helper ────────────────────────────────────────────────────────────
+function toast(msg, ms = 2200) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), ms);
+}
+
+// ─── State ───────────────────────────────────────────────────────────────────
+let pdfDoc = null;
+let fullTextByPage = [];
+let curriculum = { modules: {} };
+let _currentModule = null; // track which module is open for back navigation
+let _currentTopicModule = null;
+let _currentTopicName = null;
+let _lessonsTopic = null;
+let _lessonsModule = null;
+
+// ─── ROUTING ─────────────────────────────────────────────────────────────────
+const viewMap = {
+  'home':        'view-home',
+  'module':      'view-module',
+  'topic':       'view-topic',
+  'lessons':     'view-lessons',
+  'lesson-detail': 'view-lesson-detail',
+  'ai':          'view-ai',
+  'assessments': 'view-assessments',
+  'toolkit':     'view-toolkit',
+};
+
+function setRoute(route) {
+  // Handle module-N routes
+  if (route.startsWith('module-')) {
+    const num = route.replace('module-', '');
+    showModule(num);
+    _setActiveNav(route);
+    return;
+  }
+
+  const viewId = viewMap[route];
+  if (!viewId) return;
+
+  // Hide all views
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(viewId).classList.add('active');
+
+  _setActiveNav(route);
+  document.getElementById('main').scrollTop = 0;
+}
+
+function _setActiveNav(route) {
+  document.querySelectorAll('#sidebar button').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`#sidebar button[data-route="${route}"]`);
+  if (btn) btn.classList.add('active');
+}
+
+// Sidebar nav
+document.querySelectorAll('#sidebar button[data-route]').forEach(b => {
+  b.addEventListener('click', () => {
+    const r = b.dataset.route;
+    if (r === 'assessments') { buildAssessments(); setRoute('assessments'); }
+    else if (r === 'toolkit') { buildToolkit(); setRoute('toolkit'); }
+    else setRoute(r);
+  });
+});
+
+// ─── PDF LOAD ─────────────────────────────────────────────────────────────────
+const bundledPath = "/Revista 3 SINGAPUR san jose vegas 2026.pdf";
+
+document.getElementById('use-bundled').addEventListener('click', () => loadPDF(bundledPath));
+
+document.getElementById('pdffile').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  try {
+    await loadPDF(url);
+  } finally {
+    setTimeout(() => { try { URL.revokeObjectURL(url); } catch(e) {} }, 2000);
+  }
+});
+
+function setStatus(msg) {
+  document.getElementById('load-status').textContent = msg;
+}
+function setProgress(pct) {
+  const wrap = document.getElementById('progress-wrap');
+  const bar = document.getElementById('progress-bar');
+  if (pct === null) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  bar.style.width = pct + '%';
+}
+
+async function loadPDF(url) {
+  setStatus('⏳ Loading PDF...');
+  setProgress(5);
+
+  try {
+    pdfDoc = await pdfjsLib.getDocument(url).promise;
+  } catch(err) {
+    setStatus('❌ Error loading PDF: ' + err.message);
+    setProgress(null);
+    return;
+  }
+
+  const numPages = pdfDoc.numPages;
+  fullTextByPage = [];
+  setStatus(`📄 Extracting text from ${numPages} pages...`);
+
+  for (let i = 1; i <= numPages; i++) {
+    const page = await pdfDoc.getPage(i);
+    const txt = await page.getTextContent();
+    const pageText = txt.items.map(it => it.str).join(' ');
+    fullTextByPage.push({ page: i, text: pageText });
+    setProgress(5 + Math.round((i / numPages) * 75));
+  }
+
+  setStatus('🔍 Analyzing curriculum structure...');
+  setProgress(82);
+  analyzeBook();
+
+  setProgress(100);
+  setStatus(`✅ Done! ${numPages} pages analyzed. ${Object.keys(curriculum.modules).length} modules detected.`);
+  setTimeout(() => setProgress(null), 1000);
+
+  renderHome();
+  populateAISelector();
+}
+
+// ─── ANALYSIS ────────────────────────────────────────────────────────────────
+const moduleStructure = {
+  "1": ["Place Value","Addition","Subtraction","Measurement"],
+  "2": ["Multiplication","Area and Perimeter","Angles"],
+  "3": ["Division","Fractions","Geometry"],
+  "4": ["Coordinate Plane","Data Analysis"]
+};
+
+function analyzeBook() {
+  curriculum.modules = {};
+  for (const [mIdx, topics] of Object.entries(moduleStructure)) {
+    curriculum.modules[mIdx] = { title: `Module ${mIdx}`, topics: {} };
+    for (const topic of topics) {
+      const topicData = { pages: [], examples: [], skills: [], notes: '', rawMatches: [] };
+      for (const p of fullTextByPage) {
+        if (p.text.toLowerCase().includes(topic.toLowerCase())) {
+          topicData.pages.push(p.page);
+          topicData.rawMatches.push(p.text);
+        }
+      }
+      topicData.pageRanges = pagesToRanges(topicData.pages);
+      curriculum.modules[mIdx].topics[topic] = topicData;
+    }
+  }
+
+  // Marker scan
+  const markers = {
+    explanation: ["explain","concept","what is","understand","learn"],
+    example:     ["example","ejemplo","for example"],
+    guided:      ["guided practice","guided","solve with me"],
+    independent: ["independent practice","practice","exercises","actividad"],
+    assessment:  ["assessment","test","evaluate","evaluación","quiz","examen"],
+    review:      ["review","repaso","summary"]
+  };
+
+  for (const mKey of Object.keys(curriculum.modules)) {
+    for (const topicName of Object.keys(curriculum.modules[mKey].topics)) {
+      const t = curriculum.modules[mKey].topics[topicName];
+      const found = { explanations:[], examples:[], guided:[], independent:[], assessments:[], reviews:[] };
+      for (const pg of t.pages) {
+        const text = getPageText(pg);
+        for (const [kind, keys] of Object.entries(markers)) {
+          for (const key of keys) {
+            if (text.toLowerCase().includes(key)) {
+              pushFound(found, kind, pg, excerpt(text, key));
+            }
+          }
+        }
+      }
+      t.explanations   = unique(found.explanations);
+      t.examples       = unique(found.examples);
+      t.guided         = unique(found.guided);
+      t.independent    = unique(found.independent);
+      t.assessments    = unique(found.assessments);
+      t.reviews        = unique(found.reviews);
+      t.skills         = inferSkills(topicName);
+      t.misconceptions = inferMisconceptions(topicName);
+    }
+  }
+}
+
+// ─── UTILITIES ───────────────────────────────────────────────────────────────
+function getPageText(n) {
+  const p = fullTextByPage.find(x => x.page === n);
+  return p ? p.text : '';
+}
+function excerpt(text, key) {
+  const idx = text.toLowerCase().indexOf(key.toLowerCase());
+  if (idx < 0) return '';
+  return text.slice(Math.max(0, idx - 80), Math.min(text.length, idx + 180)).replace(/\s+/g,' ').trim();
+}
+function pushFound(found, kind, page, sample) {
+  const entry = { page, sample };
+  if (kind === 'example')      found.examples.push(entry);
+  else if (kind === 'explanation') found.explanations.push(entry);
+  else if (kind === 'guided')   found.guided.push(entry);
+  else if (kind === 'independent') found.independent.push(entry);
+  else if (kind === 'assessment')  found.assessments.push(entry);
+  else if (kind === 'review')   found.reviews.push(entry);
+}
+function unique(arr) {
+  return Array.from(new Map(arr.map(a => [a.page + ':' + a.sample, a])).values());
+}
+function pagesToRanges(pages) {
+  const sorted = [...new Set(pages)].sort((a,b) => a-b);
+  if (!sorted.length) return [];
+  const ranges = [];
+  let start = sorted[0], end = sorted[0];
+  for (let i = 1; i < sorted.length; i++) {
+    if (sorted[i] === end + 1) end = sorted[i];
+    else { ranges.push([start, end]); start = sorted[i]; end = sorted[i]; }
+  }
+  ranges.push([start, end]);
+  return ranges.map(r => r[0] === r[1] ? `${r[0]}` : `${r[0]}–${r[1]}`);
+}
+function truncate(s, n) { return s.length > n ? s.slice(0, n-1) + '…' : s; }
+
+// ─── HOME RENDER ─────────────────────────────────────────────────────────────
+function renderHome() {
+  document.getElementById('home-empty').style.display = 'none';
+  document.getElementById('home-loaded').style.display = 'block';
+
+  const mods = Object.keys(curriculum.modules);
+  document.getElementById('overview-text').textContent =
+    `${fullTextByPage.length} pages analyzed · ${mods.length} modules · ${
+      mods.reduce((s, k) => s + Object.keys(curriculum.modules[k].topics).length, 0)
+    } topics detected`;
+
+  // Overview cards
+  const grid = document.getElementById('overview-grid');
+  grid.innerHTML = '';
+  for (const [mKey, mVal] of Object.entries(curriculum.modules)) {
+    const topics = Object.keys(mVal.topics);
+    const c = document.createElement('div');
+    c.className = 'overview-card';
+    c.innerHTML = `<div class="mod-num">${mKey}</div>
+      <div class="mod-title">${mVal.title}</div>
+      <div class="mod-topics">${topics.join(' · ')}</div>`;
+    c.addEventListener('click', () => setRoute(`module-${mKey}`));
+    grid.appendChild(c);
+  }
+
+  // Topic index
+  const ul = document.getElementById('topic-list');
+  ul.innerHTML = '';
+  for (const [mKey, mVal] of Object.entries(curriculum.modules)) {
+    for (const [topicName, t] of Object.entries(mVal.topics)) {
+      const li = document.createElement('li');
+      const pages = t.pageRanges.length ? t.pageRanges.join(', ') : 'verify manually';
+      li.innerHTML = `<div><strong>${topicName}</strong><div class="muted">Module ${mKey}</div></div>
+        <span class="pages-badge">pp. ${pages}</span>`;
+      li.addEventListener('click', () => openTopicDetail(mKey, topicName));
+      ul.appendChild(li);
+    }
+  }
+}
+
+// ─── MODULE VIEW ─────────────────────────────────────────────────────────────
+function showModule(num) {
+  // num comes as string from data-route "module-1" → "1"
+  const mKey = String(num);
+  if (!curriculum.modules[mKey]) {
+    alert('Load the PDF first, then click a module.');
+    return;
+  }
+  _currentModule = mKey;
+  const mVal = curriculum.modules[mKey];
+
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-module').classList.add('active');
+
+  document.getElementById('module-title').textContent = mVal.title;
+  document.getElementById('module-sub').textContent =
+    `Topics: ${Object.keys(mVal.topics).join(' · ')}`;
+
+  const container = document.getElementById('module-topics');
+  container.innerHTML = '';
+
+  for (const [topicName, t] of Object.entries(mVal.topics)) {
+    const pages = t.pageRanges.length ? t.pageRanges.join(', ') : 'Not found';
+    const card = document.createElement('div');
+    card.className = 'topic-card';
+    card.innerHTML = `
+      <h4>${topicName}</h4>
+      <div class="muted">Pages: ${pages}</div>
+      <div class="chip-list">
+        ${t.skills.slice(0,2).map(s => `<span class="chip">${s}</span>`).join('')}
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary btn-sm" data-open-lessons="${topicName}">📖 Lessons</button>
+        <button class="btn btn-secondary btn-sm" data-open-detail="${topicName}">🔍 Detail</button>
+      </div>`;
+    container.appendChild(card);
+  }
+
+  // Attach handlers
+  container.querySelectorAll('[data-open-lessons]').forEach(b => {
+    b.addEventListener('click', () => openTopicLessons(mKey, b.dataset.openLessons));
+  });
+  container.querySelectorAll('[data-open-detail]').forEach(b => {
+    b.addEventListener('click', () => openTopicDetail(mKey, b.dataset.openDetail));
+  });
+}
+
+// ─── TOPIC DETAIL ────────────────────────────────────────────────────────────
+function openTopicDetail(mKey, topicName) {
+  _currentTopicModule = mKey;
+  _currentTopicName = topicName;
+  const t = curriculum.modules[mKey].topics[topicName];
+
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-topic').classList.add('active');
+
+  document.getElementById('topic-back-btn').onclick = () => setRoute(`module-${mKey}`);
+
+  const pages = t.pageRanges.length ? t.pageRanges.join(', ') : 'Not found — verify manually';
+
+  const lists = [
+    { title: 'Explanations', arr: t.explanations },
+    { title: 'Examples', arr: t.examples },
+    { title: 'Guided exercises', arr: t.guided },
+    { title: 'Independent exercises', arr: t.independent },
+    { title: 'Assessments', arr: t.assessments },
+    { title: 'Review sections', arr: t.reviews },
+  ];
+
+  let excerptsHTML = '';
+  for (const l of lists) {
+    excerptsHTML += `<div style="margin-bottom:10px"><strong style="font-size:.82rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)">${l.title}</strong>`;
+    if (!l.arr.length) {
+      excerptsHTML += `<div class="muted" style="margin-top:3px">No matches found — verify manually</div>`;
+    } else {
+      for (const item of l.arr) {
+        excerptsHTML += `<div class="excerpt-item"><strong>p.${item.page}:</strong> ${truncate(item.sample, 200)}</div>`;
+      }
+    }
+    excerptsHTML += `</div>`;
+  }
+
+  document.getElementById('topic-detail-content').innerHTML = `
+    <h2 class="page-title">${topicName}</h2>
+    <p class="page-sub">Module ${mKey} · Pages: ${pages}</p>
+    <div class="card">
+      <h3 style="margin-bottom:10px">Skills</h3>
+      <div class="chip-list">${t.skills.map(s => `<span class="chip">${s}</span>`).join('')}</div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:10px">Common Misconceptions</h3>
+      <div class="chip-list">${t.misconceptions.map(m => `<span class="chip red">${m}</span>`).join('')}</div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:12px">Detected Excerpts</h3>
+      ${excerptsHTML}
+    </div>
+    <div style="margin-top:4px">
+      <button class="btn btn-primary" id="go-lessons-from-detail">📖 Open Lessons for this topic</button>
+    </div>`;
+
+  document.getElementById('go-lessons-from-detail')
+    .addEventListener('click', () => openTopicLessons(mKey, topicName));
+}
+
+// ─── LESSONS ─────────────────────────────────────────────────────────────────
+function openTopicLessons(mKey, topicName) {
+  _lessonsModule = mKey;
+  _lessonsTopic = topicName;
+
+  const topic = curriculum.modules[mKey].topics[topicName];
+  const lessons = createLessonsForTopic(mKey, topicName, topic);
+  curriculum.modules[mKey].topics[topicName].lessons = lessons;
+
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-lessons').classList.add('active');
+
+  document.getElementById('lessons-back-btn').onclick = () => setRoute(`module-${mKey}`);
+
+  const container = document.getElementById('lessons-content');
+  container.innerHTML = `<h2 class="page-title">${topicName}</h2>
+    <p class="page-sub">3 differentiated lesson plans · Module ${mKey}</p>`;
+
+  for (const lesson of lessons) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const badge = lesson.diff === 'Support' ? 'btn-danger' : lesson.diff === 'Extension' ? 'btn-green' : 'btn-primary';
+    card.innerHTML = `
+      <h3>${lesson.title}</h3>
+      <div class="muted">${lesson.objective}</div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn ${badge} btn-sm" data-lid="${lesson.id}">📄 Open Lesson Plan</button>
+        <button class="btn btn-secondary btn-sm" data-ai-lid="${lesson.id}">🤖 AI Prompts</button>
+      </div>`;
+    container.appendChild(card);
+  }
+
+  // Attach handlers
+  container.querySelectorAll('[data-lid]').forEach(b => {
+    b.addEventListener('click', () => openLessonDetail(mKey, topicName, b.dataset.lid));
+  });
+  container.querySelectorAll('[data-ai-lid]').forEach(b => {
+    b.addEventListener('click', () => {
+      populateAISelector(mKey, topicName);
+      document.getElementById('select-lesson').value = b.dataset.aiLid;
+      setRoute('ai');
+    });
+  });
+
+  // Also update AI selector
+  populateAISelector(mKey, topicName);
+}
+
+// ─── LESSON DETAIL ───────────────────────────────────────────────────────────
+function openLessonDetail(mKey, topicName, lessonId) {
+  const lessons = curriculum.modules[mKey].topics[topicName].lessons;
+  const lesson = lessons.find(l => l.id === lessonId);
+  if (!lesson) return;
+
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-lesson-detail').classList.add('active');
+
+  document.getElementById('lesson-detail-back-btn').onclick =
+    () => openTopicLessons(mKey, topicName);
+
+  document.getElementById('lesson-detail-content').innerHTML = `
+    <div class="card">
+      <h2>${lesson.title}</h2>
+      <p class="muted" style="margin-bottom:16px">${lesson.objective}</p>
+      <h3 style="font-family:'DM Serif Display',serif;margin-bottom:12px">Lesson Plan</h3>
+      <div class="lesson-plan">
+        <ol>
+          <li><strong>Warm-Up:</strong> ${lesson.warmup}</li>
+          <li><strong>Mini Lesson:</strong> ${lesson.mini}</li>
+          <li><strong>Guided Practice:</strong> ${lesson.guided}</li>
+          <li><strong>Independent Practice:</strong> ${lesson.independent}</li>
+          <li><strong>Closure:</strong> ${lesson.closure}</li>
+          <li><strong>Homework:</strong> ${lesson.homework}</li>
+          <li><strong>Exit Ticket / Assessment:</strong> ${lesson.assessment}</li>
+        </ol>
+      </div>
+      <h3 style="font-family:'DM Serif Display',serif;margin:16px 0 10px">Differentiation</h3>
+      <div class="diff-grid">
+        <div class="diff-box support"><div class="diff-label">Support</div>${lesson.differentiation.support}</div>
+        <div class="diff-box onlevel"><div class="diff-label">On-Level</div>${lesson.differentiation.onlevel}</div>
+        <div class="diff-box extension"><div class="diff-label">Extension</div>${lesson.differentiation.extension}</div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-primary" id="copy-lesson-btn">📋 Copy to Clipboard</button>
+        <button class="btn btn-secondary" id="ai-from-lesson-btn">🤖 Generate AI Prompts</button>
+      </div>
+    </div>`;
+
+  document.getElementById('copy-lesson-btn').addEventListener('click', () => {
+    navigator.clipboard.writeText(serializeLesson(lesson));
+    toast('Lesson copied to clipboard ✓');
+  });
+  document.getElementById('ai-from-lesson-btn').addEventListener('click', () => {
+    populateAISelector(mKey, topicName);
+    document.getElementById('select-lesson').value = lessonId;
+    setRoute('ai');
+  });
+}
+
+// ─── LESSON CREATION ─────────────────────────────────────────────────────────
+function createLessonsForTopic(mKey, topicName, topicData) {
+  const basePages = topicData.pageRanges.length
+    ? topicData.pageRanges.join(', ')
+    : topicData.pages.length ? topicData.pages.join(', ') : 'verify pages';
+
+  return ['Support','On-Level','Extension'].map(diff => ({
+    id: nanoid(8),
+    title: `${topicName} — ${diff}`,
+    diff,
+    objective: generateObjective(topicName, diff),
+    warmup: `Quick number talk connected to ${topicName}. Reference book pages: ${basePages}.`,
+    mini: `Use the book's explanation and examples (pages ${basePages}) to model the strategy.`,
+    guided: `Work through 3 guided problems from the book (or similar) with step-by-step questions.`,
+    independent: `Students complete 6 practice problems aligned to independent exercises in the book; include at least one word problem and one diagram/representation.`,
+    closure: `Share strategies. Connect to skills: ${topicData.skills.join('; ')}.`,
+    homework: `8 problems: blend of computation + one real-world word problem. Reference pages ${basePages}.`,
+    assessment: `Exit ticket: 3 problems (computational + conceptual) modeled after book examples on pages ${basePages}.`,
+    differentiation: {
+      support: `Use manipulatives and pictured examples. Provide sentence stems and scaffolded steps.`,
+      onlevel: `Follow the book progression and independent exercises directly.`,
+      extension: `Multi-step tasks requiring explanation and justification. Include "why" questions for pages ${basePages}.`,
+    },
+    pages: basePages,
+  }));
+}
+
+function generateObjective(topic, level) {
+  const base = {
+    "Place Value":      "Students will demonstrate understanding of place value to read, write, and compare three-digit numbers.",
+    "Addition":         "Students will add multi-digit numbers using place value strategies and regrouping.",
+    "Subtraction":      "Students will subtract multi-digit numbers using place value strategies and regrouping.",
+    "Measurement":      "Students will measure lengths using standard units and solve measurement word problems.",
+    "Multiplication":   "Students will model multiplication as repeated addition and solve equal-group problems.",
+    "Area and Perimeter":"Students will find area by counting unit squares and compute perimeters of shapes.",
+    "Angles":           "Students will identify and compare right, acute, and obtuse angles.",
+    "Division":         "Students will solve partition and sharing problems and relate division to multiplication.",
+    "Fractions":        "Students will describe fractions as parts of a whole and represent simple fractions.",
+    "Geometry":         "Students will identify and describe attributes of 2D and 3D shapes.",
+    "Coordinate Plane": "Students will plot and read ordered pairs in the first quadrant.",
+    "Data Analysis":    "Students will collect and interpret simple data using charts and graphs."
+  };
+  const obj = base[topic] || `Students will engage with ${topic}.`;
+  if (level === 'Support')   return obj.replace("Students will", "Students will (with support) ");
+  if (level === 'Extension') return obj.replace("Students will", "Students will (extend reasoning) ");
+  return obj;
+}
+
+function serializeLesson(lesson) {
+  return [
+    lesson.title,
+    `\nObjective: ${lesson.objective}`,
+    `\nWarm-Up: ${lesson.warmup}`,
+    `Mini Lesson: ${lesson.mini}`,
+    `Guided Practice: ${lesson.guided}`,
+    `Independent Practice: ${lesson.independent}`,
+    `Closure: ${lesson.closure}`,
+    `Homework: ${lesson.homework}`,
+    `Assessment: ${lesson.assessment}`,
+    `\nDifferentiation:`,
+    `  Support: ${lesson.differentiation.support}`,
+    `  On-Level: ${lesson.differentiation.onlevel}`,
+    `  Extension: ${lesson.differentiation.extension}`,
+    `\nReference pages: ${lesson.pages}`,
+  ].join('\n');
+}
+
+// ─── AI PROMPTS ──────────────────────────────────────────────────────────────
+function populateAISelector(mKey, topicName) {
+  const sel = document.getElementById('select-lesson');
+  sel.innerHTML = '';
+  for (const [mk, mv] of Object.entries(curriculum.modules)) {
+    for (const [tn, t] of Object.entries(mv.topics)) {
+      if (!t.lessons) t.lessons = createLessonsForTopic(mk, tn, t);
+      for (const l of t.lessons) {
+        const opt = document.createElement('option');
+        opt.value = l.id;
+        opt.textContent = `M${mk} · ${tn} — ${l.diff}`;
+        sel.appendChild(opt);
+      }
+    }
+  }
+}
+
+document.getElementById('generate-prompts').addEventListener('click', () => {
+  const lessonId = document.getElementById('select-lesson').value;
+  const version  = document.getElementById('ai-version').value;
+  if (!lessonId) { alert('Load a book first.'); return; }
+  const pack = findLessonById(lessonId);
+  if (!pack) { alert('Lesson not found.'); return; }
+  renderAIPrompts(generateAIPrompts(pack, version));
+});
+
+function findLessonById(id) {
+  for (const [mk, mv] of Object.entries(curriculum.modules)) {
+    for (const [tn, t] of Object.entries(mv.topics)) {
+      if (t.lessons) {
+        const l = t.lessons.find(x => x.id === id);
+        if (l) return { module: mv.title, topic: tn, lesson: l, pages: t.pageRanges, rawMatches: t.rawMatches };
+      }
+    }
+  }
+  return null;
+}
+
+function generateAIPrompts(pack, version) {
+  const pages = pack.pages && pack.pages.length ? pack.pages.join(', ') : 'verify pages in book';
+  const base = `You are an instructional assistant. Analyze the Grade 3 Mathematics book from Colegio San José de Las Vegas on pages: ${pages}. Use the book's instructional style and vocabulary. Preserve progression of difficulty and do NOT copy exercises verbatim. Generate ORIGINAL questions aligned to the topic "${pack.topic}".`;
+  const variants = {
+    support:    "Create 6 scaffolded exercises easier than the book examples. Include one pictorial representation and one step-by-step solved example. Label answers separately.",
+    onlevel:    "Create 8 exercises matching the difficulty and style of the book. Include at least two word problems and two computation problems. Label answers separately.",
+    extension:  "Create 6 challenging tasks that deepen reasoning: include one multi-step problem requiring explanation, one open-ended 'why' question, and two problems requiring representations. Label answers and include teacher discussion prompts.",
+    assessment: "Create a 10-question assessment (mix computation, representation, word problems). Provide an answer key and scoring rubrics."
+  };
+  const task = variants[version] || variants.onlevel;
+  const suffix = `\n\nConstraints:\n- Preserve math vocabulary from the book.\n- Preserve progression of difficulty.\n- Generate original items; avoid copying book text.\n- Number each question.\n- Provide answer key at the end.\n- For assessment: include suggested scoring and one short rubric for a constructed-response item.`;
+
+  return {
+    "ChatGPT": `ChatGPT PROMPT:\n${base}\n\nTask:\n${task}${suffix}`,
+    "Claude":  `Claude PROMPT:\n${base}\n\nTask:\n${task}${suffix}`,
+    "Gemini":  `Gemini PROMPT:\n${base}\n\nTask:\n${task}${suffix}`,
+  };
+}
+
+function renderAIPrompts(prompts) {
+  const out = document.getElementById('ai-output');
+  out.innerHTML = '';
+  const colors = { ChatGPT: 'btn-green', Claude: 'btn-primary', Gemini: 'btn-danger' };
+  for (const [engine, text] of Object.entries(prompts)) {
+    const box = document.createElement('div');
+    box.className = 'card prompt-box';
+    box.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <h3 style="font-family:'DM Serif Display',serif">${engine}</h3>
+      <button class="btn ${colors[engine]||'btn-primary'} btn-sm" data-copy-engine="${engine}">📋 Copy</button>
+    </div>
+    <pre>${text}</pre>`;
+    out.appendChild(box);
+  }
+  out.querySelectorAll('[data-copy-engine]').forEach(b => {
+    b.addEventListener('click', () => {
+      navigator.clipboard.writeText(prompts[b.dataset.copyEngine]);
+      toast(`${b.dataset.copyEngine} prompt copied ✓`);
+    });
+  });
+}
+
+// ─── ASSESSMENTS ─────────────────────────────────────────────────────────────
+function buildAssessments() {
+  const c = document.getElementById('assessments-list');
+  c.innerHTML = '';
+  if (!Object.keys(curriculum.modules).length) {
+    c.innerHTML = '<div class="empty-state"><div class="icon">📝</div><p>Load the PDF first to generate assessments.</p></div>';
+    return;
+  }
+  for (const [mKey, mVal] of Object.entries(curriculum.modules)) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `<h3>${mVal.title} — Unit Assessments</h3>
+      <div class="muted">Exit tickets, quick checks, and unit review templates based on detected topics.</div>
+      <div style="margin-top:12px"><button class="btn btn-primary btn-sm" data-gen="${mKey}">Generate Unit Materials</button></div>`;
+    c.appendChild(card);
+  }
+  c.querySelectorAll('[data-gen]').forEach(b => {
+    b.addEventListener('click', () => generateUnitAssessments(b.dataset.gen));
+  });
+}
+
+function generateUnitAssessments(mKey) {
+  const mVal = curriculum.modules[mKey];
+  const c = document.getElementById('assessments-list');
+  c.innerHTML = `<button class="back-btn" onclick="buildAssessments()">← All Modules</button>
+    <div class="card"><h2>${mVal.title} — Assessments</h2>`;
+  for (const [topicName, t] of Object.entries(mVal.topics)) {
+    const pages = t.pageRanges.length ? t.pageRanges.join(', ') : 'verify pages';
+    c.innerHTML += `<div class="card" style="margin-top:10px">
+      <strong>${topicName}</strong>
+      <div class="muted">Suggested: Topic Assessment (3–8 items), Exit Ticket (3 items), Quick Check (5 items). Pages: ${pages}</div>
+      <div style="margin-top:8px"><button class="btn btn-secondary btn-sm" data-export="${mKey}||${topicName}">📋 Copy Template</button></div>
+    </div>`;
+  }
+  c.innerHTML += `</div>`;
+  c.querySelectorAll('[data-export]').forEach(b => {
+    b.addEventListener('click', () => {
+      const [m, topic] = b.dataset.export.split('||');
+      const t = curriculum.modules[m].topics[topic];
+      navigator.clipboard.writeText(assessmentTemplate(m, topic, t));
+      toast('Assessment template copied ✓');
+    });
+  });
+}
+
+function assessmentTemplate(mKey, topicName, t) {
+  const pages = t.pageRanges.length ? t.pageRanges.join(', ') : 'verify pages in book';
+  return `ASSESSMENT — ${topicName} (Module ${mKey})
+Reference pages: ${pages}
+
+Topic Assessment (6 items):
+1. 
+2. 
+3. 
+4. 
+5. 
+6. 
+
+Exit Ticket (3 items):
+1. 
+2. 
+3. 
+
+Quick Check (5 items):
+1. 
+2. 
+3. 
+4. 
+5. 
+
+Rubric: 2 pts correct computation · 1 pt partial work · 0 no attempt.
+For constructed response: 3 pts clear reasoning · 2 pts partial · 1 pt minimal explanation.
+
+Note: Use book examples as source for item style and difficulty progression.`;
+}
+
+// ─── TOOLKIT ─────────────────────────────────────────────────────────────────
+function buildToolkit() {
+  const tk = document.getElementById('toolkit-grid');
+  tk.innerHTML = '';
+  const templates = [
+    { title: '📋 Lesson Planning Template', id: 'tpl-lesson' },
+    { title: '👥 Small Group Template',     id: 'tpl-small' },
+    { title: '🆘 Intervention Template',    id: 'tpl-intervention' },
+    { title: '🚀 Extension Template',       id: 'tpl-extension' },
+    { title: '📝 Assessment Template',      id: 'tpl-assess' },
+  ];
+  for (const t of templates) {
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML = `<strong>${t.title}</strong>
+      <div class="muted" style="margin-top:4px">Ready-to-copy template aligned to book content.</div>
+      <div style="margin-top:10px"><button class="btn btn-secondary btn-sm" data-tpl="${t.id}">📋 Copy Template</button></div>`;
+    tk.appendChild(c);
+  }
+  tk.querySelectorAll('[data-tpl]').forEach(b => {
+    b.addEventListener('click', () => {
+      navigator.clipboard.writeText(toolkitTemplate(b.dataset.tpl));
+      toast('Template copied ✓');
+    });
+  });
+}
+
+function toolkitTemplate(id) {
+  const T = {
+    'tpl-lesson': `LESSON PLAN TEMPLATE\n\nGrade: 3\nTopic:\nBook pages:\nObjective:\nMaterials:\n\nWarm-Up:\nMini Lesson:\nGuided Practice:\nIndependent Practice:\nClosure:\nHomework:\n\nDifferentiation:\n  Support:\n  On-Level:\n  Extension:\n\nAssessment / Exit Ticket:\nNotes:`,
+    'tpl-small':  `SMALL GROUP TEMPLATE\n\nGroup focus:\nStudents:\nDiagnostic data:\nObjective:\nMaterials/manipulatives:\nActivity steps:\nTeacher prompts:\nCheck for understanding:\nNext steps:`,
+    'tpl-intervention': `INTERVENTION TEMPLATE\n\nSkill target:\nPre-assessment:\nGoal:\nScaffolded steps:\nManipulatives:\nPractice tasks (2–3):\nProgress monitoring schedule:\nExit criteria:`,
+    'tpl-extension': `EXTENSION TEMPLATE\n\nEnrichment task title:\nLearning target:\nChallenge tasks (2):\nRepresentation required:\nStudent prompts for justification:\nAssessment of reasoning:`,
+    'tpl-assess': `ASSESSMENT TEMPLATE\n\nAssessment Title:\nReference pages:\nItems (numbered):\nAnswer Key:\nScoring Rubric:\n\nNote: Use book examples as reference for style and progression.`,
+  };
+  return T[id] || '';
+}
+
+// ─── INFERENCE ───────────────────────────────────────────────────────────────
+function inferSkills(topic) {
+  const map = {
+    "Place Value":       ["Recognize ones, tens, hundreds","Read/write three-digit numbers","Compare and order numbers"],
+    "Addition":          ["Add within 1000","Use regrouping strategies","Solve addition word problems"],
+    "Subtraction":       ["Subtract within 1000","Use borrowing strategies","Solve subtraction word problems"],
+    "Measurement":       ["Measure length in standard units","Estimate and compare","Solve measurement problems"],
+    "Multiplication":    ["Multiplication as repeated addition","Use arrays and equal groups","Multiply basic facts"],
+    "Area and Perimeter":["Find area using unit squares","Calculate perimeter","Relate area and perimeter"],
+    "Angles":            ["Identify right/acute/obtuse angles","Measure angles","Compare angle sizes"],
+    "Division":          ["Division as sharing/partitioning","Relate division to multiplication","Divide basic facts"],
+    "Fractions":         ["Fractions as parts of a whole","Represent fractions in diagrams","Compare simple fractions"],
+    "Geometry":          ["Identify 2D/3D shapes","Describe symmetry/congruence","Classify shapes"],
+    "Coordinate Plane":  ["Use coordinates to locate points","Read ordered pairs","Plot in first quadrant"],
+    "Data Analysis":     ["Collect and organize data","Create/read simple graphs","Answer questions from data"]
+  };
+  return map[topic] || [];
+}
+function inferMisconceptions(topic) {
+  const map = {
+    "Place Value":       ["Reading digits instead of place value","Confusing zeros in place value"],
+    "Addition":          ["Forgetting to regroup","Misaligning digits"],
+    "Subtraction":       ["Borrowing from zero incorrectly","Mixing minuend and subtrahend"],
+    "Measurement":       ["Wrong units","Not measuring full unit spans"],
+    "Multiplication":    ["Commutativity confusion","Skipping equal-group representation"],
+    "Area and Perimeter":["Confusing area and perimeter","Unit squares vs side length"],
+    "Angles":            ["Incorrect angle type names","Longer sides = bigger angle"],
+    "Division":          ["Division always makes smaller","Remainder confusion"],
+    "Fractions":         ["Bigger denominator = bigger fraction","Misreading fraction diagrams"],
+    "Geometry":          ["Misclassifying by orientation","Confusing 2D vs 3D"],
+    "Coordinate Plane":  ["Swapping x and y","Wrong quadrant"],
+    "Data Analysis":     ["Misreading graph scales","Mixing categories and values"]
+  };
+  return map[topic] || [];
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+buildToolkit();
+setRoute('home');
+</script>
+</body>
+</html>
